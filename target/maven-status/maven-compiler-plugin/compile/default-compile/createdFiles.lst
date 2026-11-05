@@ -1,0 +1,9 @@
+com\uth\appsqlite\dao\PersonaDAO.class
+com\uth\appsqlite\AppSQLite.class
+views\FrmPersonas.class
+views\FrmPersonas$1.class
+com\uth\appsqlite\models\Persona.class
+views\FrmPrincipal.class
+views\JInternalFrmPersonas.class
+com\uth\appsqlite\config\Conexion.class
+views\FrmPersonas$2.class

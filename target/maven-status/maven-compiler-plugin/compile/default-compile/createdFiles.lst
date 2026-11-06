@@ -1,7 +1,10 @@
+com\uth\appsqlite\dao\IPersonasDAO.class
 com\uth\appsqlite\dao\PersonaDAO.class
 com\uth\appsqlite\AppSQLite.class
+views\JInternalFrmPersonas$2.class
 views\FrmPersonas.class
 views\FrmPersonas$1.class
+views\JInternalFrmPersonas$1.class
 com\uth\appsqlite\models\Persona.class
 views\FrmPrincipal.class
 views\JInternalFrmPersonas.class

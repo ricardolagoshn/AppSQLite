@@ -4,17 +4,26 @@
  */
 package views;
 
+import com.uth.appsqlite.dao.PersonaDAO;
+import com.uth.appsqlite.models.Persona;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dev01
  */
 public class JInternalFrmPersonas extends javax.swing.JInternalFrame {
 
+    private final PersonaDAO dao = new PersonaDAO();
+
     /**
      * Creates new form JInternalFrmPersonas
      */
     public JInternalFrmPersonas() {
         initComponents();
+
+        cargarPersonas();
     }
 
     /**
@@ -26,21 +35,276 @@ public class JInternalFrmPersonas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombres = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtApellidos = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtEdad = new javax.swing.JTextField();
+        btnNuevo = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbPersonas = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Registro de Personas");
+
+        jLabel1.setText("ID");
+
+        txtID.setEditable(false);
+
+        jLabel2.setText("Nombres");
+
+        jLabel3.setText("Apellidos");
+
+        jLabel4.setText("Edad");
+
+        btnNuevo.setText("Nuevo");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
+
+        tbPersonas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbPersonas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPersonasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbPersonas);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String nombres = txtNombres.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String edadTexto = txtEdad.getText().trim();
+
+        if(nombres.isEmpty() || apellidos.isEmpty() || edadTexto.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios");
+            return;
+        }
+
+        int edad;
+        try
+        {
+            edad = Integer.parseInt(edadTexto);
+        }
+        catch(NumberFormatException ex)
+        {
+            JOptionPane.showMessageDialog(this, "La edad debe ser un numero entero");
+            txtEdad.requestFocus();
+            return;
+        }
+
+        Persona persona = new Persona();
+        persona.setNombres(nombres);
+        persona.setApellidos(apellidos);
+        persona.setEdad(edad);
+
+        dao.insertar(persona);
+
+        JOptionPane.showMessageDialog(this, "Persona guardada con exito");
+
+        limpiar();
+        cargarPersonas();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tbPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPersonasMouseClicked
+        int fila = tbPersonas.getSelectedRow();
+
+        if(fila >= 0)
+        {
+            int filaModelo = tbPersonas.convertRowIndexToModel(fila);
+
+            txtID.setText(String.valueOf(tbPersonas.getModel().getValueAt(filaModelo, 0)));
+            txtNombres.setText(String.valueOf(tbPersonas.getModel().getValueAt(filaModelo, 1)));
+            txtApellidos.setText(String.valueOf(tbPersonas.getModel().getValueAt(filaModelo, 2)));
+            txtEdad.setText(String.valueOf(tbPersonas.getModel().getValueAt(filaModelo, 3)));
+        }
+    }//GEN-LAST:event_tbPersonasMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try
+        {
+            int id = Integer.parseInt(this.txtID.getText());
+            String nombres = this.txtNombres.getText();
+            String apellidos = this.txtApellidos.getText();
+            int edad  = Integer.parseInt(this.txtEdad.getText());
+
+            if(nombres.isEmpty() || edad < 0)
+            {
+                JOptionPane.showMessageDialog(this," Ingrese datos validos!! ");
+            }
+
+            Persona persona = new Persona(id, nombres, apellidos, edad);
+            dao.actualizar(persona);
+
+            cargarPersonas();
+            limpiar();
+        }
+        catch(Exception ex)
+        {
+
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try
+        {
+            int pid = Integer.parseInt(txtID.getText());
+
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                    "Desea eliminar esta persona ?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(respuesta == JOptionPane.YES_OPTION)
+            {
+                dao.eliminar(pid);
+                cargarPersonas();
+                limpiar();
+            }
+        }
+        catch(Exception ex)
+        {
+             JOptionPane.showMessageDialog(this," Ha Ocurrido un error al eliminar la persona !! ");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbPersonas;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarPersonas()
+    {
+        DefaultTableModel tbmodelo = new DefaultTableModel(new Object[]{"ID","NOMBRES","APELLIDOS","EDAD"},0)
+        {
+            @Override
+            public boolean isCellEditable(int fila, int columna)
+            {
+                return false;
+            }
+        };
+
+        for(Persona p : dao.listar())
+        {
+            tbmodelo.addRow(new Object[]
+            {
+                p.getId(),
+                p.getNombres(),
+                p.getApellidos(),
+                p.getEdad()
+            });
+        }
+
+        tbPersonas.setModel(tbmodelo);
+    }
+
+    private void limpiar()
+    {
+        txtID.setText("");
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtEdad.setText("");
+        txtNombres.requestFocus();
+    }
 }

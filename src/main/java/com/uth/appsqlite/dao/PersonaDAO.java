@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonaDAO
+public class PersonaDAO implements IPersonasDAO
 {
     
     // CREATE 
@@ -152,6 +152,32 @@ public class PersonaDAO
             else
             {
                 System.out.println("No se encontro la persona con id " + id);
+            }
+        }
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+     public void eliminar(Persona persona)
+    {
+        String sql = "DELETE FROM Persona WHERE id = ?";
+
+        try(Connection con = Conexion.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)
+                )
+        {
+            ps.setInt(1, persona.getId());
+            int filas = ps.executeUpdate();
+
+            if(filas > 0)
+            {
+                System.out.println("Persona eliminada con exito");
+            }
+            else
+            {
+                System.out.println("No se encontro la persona con id " + persona.getId());
             }
         }
         catch(SQLException ex)

@@ -28,13 +28,22 @@ public class Conexion
                 + " nombres TEXT NOT NULL, "
                 + " apellidos TEXT NOT NULL, "
                 + " edad INTEGER NOT NULL )";
-        
+
+        // Tabla Pais con campos de control: estado (1 = activo, 0 = inactivo)
+        // y fechaRegistro (se llena automaticamente al insertar)
+        String sqlPais = "CREATE TABLE IF NOT EXISTS Pais"
+                + "( idPais INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + " nombre TEXT NOT NULL UNIQUE, "
+                + " estado INTEGER NOT NULL DEFAULT 1 CHECK (estado IN (0,1)), "
+                + " fechaRegistro TEXT NOT NULL DEFAULT (datetime('now','localtime')) )";
+
         try(Connection con = conectar();
                 Statement stmt = con.createStatement()
                 )
         {
             stmt.execute(sql);
-            System.out.println("Tabla creada con exito");
+            stmt.execute(sqlPais);
+            System.out.println("Tablas creadas con exito");
         }
         catch(SQLException ex)
         {
